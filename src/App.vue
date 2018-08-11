@@ -88,6 +88,7 @@
           </el-input>
           <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Hobby</el-button>
         </div>
+        <button type="button" class="btn btn-primary" @click="createMember()">Create</button>
       </form>
     </el-dialog>
     <router-view/>
@@ -118,6 +119,26 @@ export default {
     };
   },
   methods: {
+    createMember() {
+      this.submitting = true;
+      this.$http
+        .post(`${process.env.API}/user`, this.member)
+        .then(res => {
+          this.$message.success(`Created ${this.member.name}`);
+          this.submitting = false;
+          this.member = {
+            name: '',
+            age: 1,
+            gender: 'f',
+            education: 'shs',
+            hobbies: []
+          };
+        })
+        .catch(res => {
+          this.$message.error('Failed to create this member, please try later');
+          this.submitting = false;
+        });
+    },
     handleClose(tag) {
       this.member.hobbies.splice(this.member.hobbies.indexOf(tag), 1);
     },
