@@ -41,9 +41,7 @@ export default {
   },
   created() {
     this.$http
-      .get(
-        `http://localhost:3000/house/?house_id=${this.$route.params.house_id}`
-      )
+      .get(`${process.env.API}/house/?house_id=${this.$route.params.house_id}`)
       .then(res => {
         this.$store.commit('setCurrentHouse', res.body);
       });

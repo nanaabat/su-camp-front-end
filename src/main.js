@@ -11,9 +11,10 @@ import store from './plugins/store';
 import router from './router';
 // import { Client } from "paho-mqtt";
 
+Vue.use(VueResource);
+Vue.http.options.root = process.env.API || 'http://localhost:3000';
 Vue.use(ElementUI, { locale });
 Vue.use(VueRouter);
-Vue.use(VueResource);
 
 Vue.config.productionTip = false;
 
