@@ -63,6 +63,31 @@
             </select>
           </div>
         </div>
+        <div class="form-group">
+          <h6>Hobbies</h6>
+          <el-tag
+            :key="hobby"
+            v-for="hobby in member.hobbies"
+            closable
+            :disable-transitions="false"
+            @close="handleClose(hobby)">
+            {{hobby}}
+          </el-tag>
+          <el-input
+            class="input-new-tag"
+            v-if="inputVisible"
+            v-model="inputValue"
+            ref="saveTagInput"
+            size="mini"
+            @keyup.enter.native="handleInputConfirm"
+            @blur="handleInputConfirm"
+            id="tagInput"
+            style="width:120px;"
+            placeholder="New Hobby"
+          >
+          </el-input>
+          <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Hobby</el-button>
+        </div>
       </form>
     </el-dialog>
     <router-view/>
@@ -85,11 +110,34 @@ export default {
         name: '',
         age: 1,
         gender: 'f',
-        education: 'shs'
-      }
+        education: 'shs',
+        hobbies: []
+      },
+      inputValue: '',
+      inputVisible: false
     };
   },
-  methods: {},
+  methods: {
+    handleClose(tag) {
+      this.member.hobbies.splice(this.member.hobbies.indexOf(tag), 1);
+    },
+
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+
+    handleInputConfirm() {
+      let inputValue = this.inputValue;
+      if (inputValue) {
+        this.member.hobbies.push(inputValue);
+      }
+      this.inputVisible = false;
+      this.inputValue = '';
+    }
+  },
   mounted() {}
 };
 </script>
