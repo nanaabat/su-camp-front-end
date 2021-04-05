@@ -1,6 +1,6 @@
 # hacklab-iot-webcli
 
-> A simple Dashboard to view temperature/humidity data from an mqtt broker
+> A simple Dashboard to view houses
 
 ## Build Setup
 
